@@ -1,0 +1,266 @@
+{
+  "info": {
+    "name": "Practica 2.3 - Traduccion y normalizacion (Mejia Marcelo)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000/api"
+    }
+  ],
+  "item": [
+    {
+      "name": "P1 - Origen A web valido (200)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"codigoGuia\": \" ec123456789ec \",\n  \"nombreProducto\": \"  Licuadora   Oster - caja golpeada \",\n  \"descripcion\": \"Licuadora de 1.5 L, funciona correctamente\",\n  \"gradoDanio\": \"Leve\",\n  \"detalleDanio\": \"Esquina de la caja hundida\",\n  \"precioVenta\": \"24,50\",\n  \"unidades\": \"5\",\n  \"publicar\": \"Sí\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/integracion/web/normalizar",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "integracion",
+            "web",
+            "normalizar"
+          ]
+        }
+      }
+    },
+    {
+      "name": "P2 - Origen B rastreo equivalente (200)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"tracking_number\": \"EC123456789EC\",\n  \"item\": {\n    \"title\": \"Licuadora Oster - caja golpeada\",\n    \"details\": \"Licuadora de 1.5 L, funciona correctamente\",\n    \"quantity\": 5\n  },\n  \"damage\": {\n    \"severity_code\": 1,\n    \"notes\": \"Esquina de la caja hundida\"\n  },\n  \"pricing\": {\n    \"amount\": 24.5,\n    \"currency\": \"USD\"\n  },\n  \"available_for_sale\": true,\n  \"received_at\": \"2026-11-11T03:15:00Z\",\n  \"office\": {\n    \"code\": \"MNT\",\n    \"name\": \"Agencia Manta\"\n  }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/integracion/rastreo/normalizar",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "integracion",
+            "rastreo",
+            "normalizar"
+          ]
+        }
+      }
+    },
+    {
+      "name": "P3a - Origen A monto ambiguo 24.50 (422)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"codigoGuia\": \" ec123456789ec \",\n  \"nombreProducto\": \"  Licuadora   Oster - caja golpeada \",\n  \"descripcion\": \"Licuadora de 1.5 L, funciona correctamente\",\n  \"gradoDanio\": \"Leve\",\n  \"detalleDanio\": \"Esquina de la caja hundida\",\n  \"precioVenta\": \"24.50\",\n  \"unidades\": \"5\",\n  \"publicar\": \"Sí\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/integracion/web/normalizar",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "integracion",
+            "web",
+            "normalizar"
+          ]
+        }
+      }
+    },
+    {
+      "name": "P3b - Origen B faltan tracking_number y amount (422)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"item\": {\n    \"title\": \"Licuadora Oster - caja golpeada\",\n    \"details\": \"Licuadora de 1.5 L, funciona correctamente\",\n    \"quantity\": 5\n  },\n  \"damage\": {\n    \"severity_code\": 1,\n    \"notes\": \"Esquina de la caja hundida\"\n  },\n  \"pricing\": {\n    \"currency\": \"USD\"\n  },\n  \"available_for_sale\": true,\n  \"received_at\": \"2026-11-11T03:15:00Z\",\n  \"office\": {\n    \"code\": \"MNT\",\n    \"name\": \"Agencia Manta\"\n  }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/integracion/rastreo/normalizar",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "integracion",
+            "rastreo",
+            "normalizar"
+          ]
+        }
+      }
+    },
+    {
+      "name": "P3c - Origen B moneda, severidad y booleano invalidos (422)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"tracking_number\": \"EC123456789EC\",\n  \"item\": {\n    \"title\": \"Licuadora Oster - caja golpeada\",\n    \"details\": \"Licuadora de 1.5 L, funciona correctamente\",\n    \"quantity\": 5\n  },\n  \"damage\": {\n    \"severity_code\": 4,\n    \"notes\": \"Esquina de la caja hundida\"\n  },\n  \"pricing\": {\n    \"amount\": 24.5,\n    \"currency\": \"EUR\"\n  },\n  \"available_for_sale\": \"true\",\n  \"received_at\": \"2026-11-11T03:15:00Z\",\n  \"office\": {\n    \"code\": \"MNT\",\n    \"name\": \"Agencia Manta\"\n  }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/integracion/rastreo/normalizar",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "integracion",
+            "rastreo",
+            "normalizar"
+          ]
+        }
+      }
+    },
+    {
+      "name": "P4 - Registrar desde web en damaged_products (201)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"codigoGuia\": \" ec123456789ec \",\n  \"nombreProducto\": \"  Licuadora   Oster - caja golpeada \",\n  \"descripcion\": \"Licuadora de 1.5 L, funciona correctamente\",\n  \"gradoDanio\": \"Leve\",\n  \"detalleDanio\": \"Esquina de la caja hundida\",\n  \"precioVenta\": \"24,50\",\n  \"unidades\": \"5\",\n  \"publicar\": \"Sí\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/integracion/web/productos",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "integracion",
+            "web",
+            "productos"
+          ]
+        }
+      }
+    },
+    {
+      "name": "P5 - Mismo producto desde rastreo: sku repetido (422)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"tracking_number\": \"EC123456789EC\",\n  \"item\": {\n    \"title\": \"Licuadora Oster - caja golpeada\",\n    \"details\": \"Licuadora de 1.5 L, funciona correctamente\",\n    \"quantity\": 5\n  },\n  \"damage\": {\n    \"severity_code\": 1,\n    \"notes\": \"Esquina de la caja hundida\"\n  },\n  \"pricing\": {\n    \"amount\": 24.5,\n    \"currency\": \"USD\"\n  },\n  \"available_for_sale\": true,\n  \"received_at\": \"2026-11-11T03:15:00Z\",\n  \"office\": {\n    \"code\": \"MNT\",\n    \"name\": \"Agencia Manta\"\n  }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/integracion/rastreo/productos",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "integracion",
+            "rastreo",
+            "productos"
+          ]
+        }
+      }
+    }
+  ]
+}
