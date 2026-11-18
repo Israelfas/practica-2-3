@@ -3,7 +3,7 @@
 use App\Http\Controllers\Api\IntegracionProductoController;
 use Illuminate\Support\Facades\Route;
 
-// Práctica 2.3 - Marcelo Mejía: traducción y normalización hacia el contrato de POST /api/products
+// Práctica 2.3: traducción y normalización hacia el contrato de POST /api/products
 Route::prefix('integracion/{origen}')
     ->whereIn('origen', ['web', 'rastreo'])
     ->group(function () {

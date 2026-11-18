@@ -8,7 +8,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
 /**
- * Práctica 2.3 – Marcelo Mejía
+ * Práctica 2.3
  * Dos entradas heterogéneas del mismo producto deben producir el mismo contrato
  * de POST /api/products del backend del proyecto de aula.
  */

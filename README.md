@@ -1,10 +1,5 @@
 # Práctica 2.3: patrones de traducción y normalización (IS-803)
 
-**Estudiante:** Marcelo Israel Mejía Chamorro · 8.º nivel / A
-**Proyecto de aula:** Correos – Productos Dañados (arquitectura de 5 nodos: L3 backend, L4 PostgreSQL)
-**Escenario:** registrar un producto dañado que llega desde dos componentes con estructuras distintas.
-**Cierre de la entrega:** martes 17 de noviembre de 2026, 23:59
-
 ## Escenario
 
 En el proyecto de aula, el backend crea productos dañados con `POST /api/products`. Ese es el **contrato común**, definido en `ProductRequest` y guardado en la tabla `damaged_products`. El mismo producto puede llegar desde dos componentes:
@@ -107,12 +102,3 @@ Postman: importa `Practica_2_3.postman_collection.json` y ejecuta en orden de P1
 | P5 | El mismo producto desde rastreo | 422 con `errors.sku`, porque no se duplica |
 
 Si P4 devuelve 422 por el `sku`, es porque ya lo ejecutaste antes. Reinicia los datos con `php artisan migrate:fresh`.
-
-## Subir el código
-
-```bash
-git remote add origin https://github.com/Israelfas/practica-2-3.git
-git push -u origin main
-```
-
-El `.gitignore` de Laravel ya excluye `.env` y `vendor/`.
